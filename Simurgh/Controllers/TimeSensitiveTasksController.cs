@@ -27,6 +27,20 @@ namespace Simurgh.Controllers
                           Problem("Entity set 'ApplicationDbContext.TimeSensitiveTask'  is null.");
         }
 
+        // GET: ShowSearchForm
+        public async Task<IActionResult> ShowSearchForm()
+        {
+            return View();
+        }
+
+        // PoST: ShowSearchResults
+        public async Task<IActionResult> ShowSearchResults(string SearchPhrase)
+        {
+            return _context.TimeSensitiveTask != null ?
+                          View("Index", await _context.TimeSensitiveTask.Where(j => j.Title.Contains(SearchPhrase)||j.Description.Contains(SearchPhrase)).ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.TimeSensitiveTask'  is null.");
+        }
+
         // GET: TimeSensitiveTasks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
